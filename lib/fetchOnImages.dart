@@ -16,7 +16,6 @@ List getCardsForGame(){
 }
 
 String gitItemOfList(int i){
-  getCardsForGame();
   return list[i];
 }
 
