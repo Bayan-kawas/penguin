@@ -9,13 +9,13 @@ Map images ={
 };
 List list=[];
 List getCardsForGame(){
-   list = images.keys.toList(); // get al ist of the keys of the map
+  list = images.keys.toList(); // get al ist of the keys of the map
   list.addAll([]..addAll(list));
   list.shuffle(); // shuffle the elements of the list
   return list;
 }
 
-String gitItemOfList(int i){
+String getItemOfList(int i){
   return list[i];
 }
 

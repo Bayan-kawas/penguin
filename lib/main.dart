@@ -3,7 +3,7 @@ import 'dart:math';
 import 'fetchOnImages.dart';
 
 void main() {
-  print(getCardsForGame());
+  getCardsForGame();
   runApp(MyApp());
 }
 
@@ -13,8 +13,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int i=0;
+  int i = 0;
   String imgCover = 'assets/images/cover.png';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,132 +31,85 @@ class _MyAppState extends State<MyApp> {
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {
-                            setState(() {
-                              imgCover =images[gitItemOfList(0)];
-                            });
-                            print(imgCover);
-                            },
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {
-                          },
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {
-                          },
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
+                    GameCard(index: 0),
+                    GameCard(index: 1),
+                    GameCard(index: 2),
+                    GameCard(index: 3),
                   ],
                 ),
               ),
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {
-                            // imgCover =Image.asset('assets/images/img$randomNumber.jpg');
-                            //print(imgCover);
-                          },
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
+                    GameCard(index: 4),
+                    GameCard(index: 5),
+                    GameCard(index: 6),
+                    GameCard(index: 7),
                   ],
                 ),
               ),
               Expanded(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {
-                            // imgCover =Image.asset('assets/images/img$randomNumber.jpg');
-                            //print(imgCover);
-                          },
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: FlatButton(
-                          onPressed: () {},
-                          child: Image.asset(imgCover),
-                        ),
-                      ),
-                    ),
+                    GameCard(index: 8),
+                    GameCard(index: 9),
+                    GameCard(index: 10),
+                    GameCard(index: 11),
+
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class GameCard extends StatefulWidget {
+  int index;
+
+  GameCard({Key key, this.index}) : super(key: key);
+
+  @override
+  _GameCardState createState() => _GameCardState(index: index);
+}
+
+class _GameCardState extends State<GameCard> {
+  int index;
+  String imagePath;
+  bool isOnBack = true;
+
+  String imgCover = 'assets/images/cover.png';
+
+  _GameCardState({this.index});
+
+
+  void initState() {
+    super.initState();
+    imagePath = imgCover;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        child: FlatButton(
+          onPressed: () {
+            setState(() {
+              if(isOnBack){
+                print("this is");
+                print(index);
+                imagePath = images[getItemOfList(index)];
+              }else{
+                imagePath = imgCover;
+              }
+            });
+            this.isOnBack = ! this.isOnBack;
+          },
+          child: Image.asset(imagePath),
         ),
       ),
     );
