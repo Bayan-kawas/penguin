@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:penguin/gameCard.dart';
+import 'package:penguin/movesCounter.dart';
 import 'main.dart';
-import 'fetchOnImages.dart';
+import 'globals.dart';
 
 class Result extends StatefulWidget {
   @override
@@ -9,6 +10,28 @@ class Result extends StatefulWidget {
 }
 
 class _ResultState extends State<Result> {
+  int bestScore;
+
+  @override
+  void initState() {
+    super.initState();
+    updateBestScore();
+  }
+
+  void updateBestScore() {
+    if (prefs.containsKey('bestScore')) {
+      bestScore = prefs.getInt('bestScore');
+    } else {
+      bestScore = movement;
+      prefs.setInt('bestScore', bestScore);
+    }
+
+    if (movement < bestScore) {
+      bestScore = movement;
+      prefs.setInt('bestScore', bestScore);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +47,7 @@ class _ResultState extends State<Result> {
             width: 400,
             child: Card(
               child: Padding(
-                padding:EdgeInsets.all(40),
+                padding: EdgeInsets.all(20),
                 child: Column(
                   children: <Widget>[
                     Padding(
@@ -35,15 +58,24 @@ class _ResultState extends State<Result> {
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
                             color: Colors.pinkAccent,
-                          fontSize: 18
-                        ),
+                            fontSize: 18),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "Best score ${bestScore}",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.pinkAccent,
+                            fontSize: 18),
                       ),
                     ),
                     FlatButton(
                       color: Colors.grey,
                       onPressed: () {
-                        getCardsForGame();
-                        total=0;
+                        startGame();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => MyApp()),

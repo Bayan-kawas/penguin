@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'fetchOnImages.dart';
 import "dart:async";
 import 'resultpage.dart';
-var cardsOnFront = [];
-List gameCards = [];
-int wins = 0;
-int efforts = 0;
-int movement;
-int total=0;
+import 'globals.dart';
 
 class GameCard extends StatefulWidget {
   int index;
@@ -17,7 +11,6 @@ class GameCard extends StatefulWidget {
 
   void clearImage() {
     state.clearMe();
-    print(gameCards.length);
   }
 
   void flipOnBack() {
@@ -51,12 +44,7 @@ class _GameCardState extends State<GameCard> {
       done = true;
     });
   }
- void counter(){
-    setState(() {
-      total++;
-      print(total);
-    });
- }
+
   void flipOnBack() {
     setState(() {
       imagePath = imgCover;
@@ -82,37 +70,35 @@ class _GameCardState extends State<GameCard> {
 
               if (cardsOnFront.length == 2 &&
                   cardsOnFront[0]['name'] == cardsOnFront[1]['name']) {
-                new Future.delayed(Duration(seconds: 1), () {
+                new Future.delayed(Duration(milliseconds: 500), () {
                   for (var i = 0; i < cardsOnFront.length; i++) {
                     gameCards[cardsOnFront[i]['index']].clearImage();
                   }
                   cardsOnFront = [];
-                    wins++;
-                  counter();
-                  if(wins == 6){
+                  wins++;
+                  if (wins == 6) {
                     movement = wins + efforts;
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Result() ),
+                      MaterialPageRoute(builder: (context) => Result()),
                     );
                   }
                 });
-
+                movesCounter.increment();
                 return;
               }
 
               if (cardsOnFront.length == 2) {
-                new Future.delayed(Duration(seconds: 2), () {
+                new Future.delayed(Duration(milliseconds: 500), () {
                   for (var i = 0; i < cardsOnFront.length; i++) {
                     gameCards[cardsOnFront[i]['index']].flipOnBack();
                   }
                   cardsOnFront = [];
                   efforts++;
-                  counter();
                 });
+                movesCounter.increment();
               }
             });
-
           },
           child: showCard(imagePath, done),
         ),
@@ -124,4 +110,3 @@ class _GameCardState extends State<GameCard> {
 Widget showCard(path, done) {
   return done ? Text("") : Image.asset(path);
 }
-

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'fetchOnImages.dart';
 import 'gameCard.dart';
+import 'movesCounter.dart';
+import 'globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-void main() {
-  getCardsForGame();
-  for (var i = 0; i < 12; i++) {
-    gameCards.add(GameCard(index: i));
-  }
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
+  startGame();
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-MyApp();
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -29,24 +27,12 @@ class _MyAppState extends State<MyApp> {
         child: Scaffold(
           appBar: AppBar(
             title: Row(
-            children: <Widget>[
-              Center(
-                child: Text("penguin game"),
-              ),
-              Container(
-               child:  Row(
-                mainAxisAlignment:MainAxisAlignment.end,
-                 children: <Widget>[
-                  Icon(
-                    Icons.add,
-                  ),
-
-                   Text("$total",
-                   ),
-                 ],
-               ),
-              )
-            ],
+              children: <Widget>[
+                Center(
+                  child: Text("penguin game"),
+                ),
+                movesCounter
+              ],
             ),
           ),
           body: Column(
@@ -88,4 +74,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
