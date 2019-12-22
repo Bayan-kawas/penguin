@@ -19,20 +19,52 @@ class _ResultState extends State<Result> {
           ),
         ),
         body: Center(
-          child: Column(
-            children: <Widget>[
-              Text("you are won with $movement movement "),
-              FlatButton(
-                onPressed: () {
-                  getCardsForGame();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyApp()),
-                  );
-                },
-                child: Text("Restart Game"),
-              )
-            ],
+          child: Container(
+            height: 200,
+            width: 400,
+            child: Card(
+              child: Padding(
+                padding:EdgeInsets.all(40),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        "you are won with $movement movement ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.pinkAccent,
+                          fontSize: 18
+                        ),
+                      ),
+                    ),
+                    FlatButton(
+                      color: Colors.grey,
+                      onPressed: () {
+                        getCardsForGame();
+                        total=0;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          "Restart Game",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black.withOpacity(1.0),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),

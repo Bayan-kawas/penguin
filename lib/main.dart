@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
               ),
               Container(
                child:  Row(
+                mainAxisAlignment:MainAxisAlignment.end,
                  children: <Widget>[
                   Icon(
                     Icons.add,
