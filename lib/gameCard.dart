@@ -5,28 +5,22 @@ import 'globals.dart';
 
 class GameCard extends StatefulWidget {
   int index;
+  var image;
   _GameCardState state;
 
-  GameCard({Key key, this.index}) : super(key: key);
-
-  void clearImage() {
-    state.clearMe();
-  }
-
-  void flipOnBack() {
-    state.flipOnBack();
-  }
+  GameCard({Key key, this.image, this.index}) : super(key: key);
 
   @override
   _GameCardState createState() {
-    state = _GameCardState(index: index);
+    state = _GameCardState(image: this.image, index: this.index);
     return state;
   }
 }
 
 class _GameCardState extends State<GameCard> {
-  _GameCardState({this.index});
+  _GameCardState({this.image, this.index});
 
+  var image;
   int index;
   String imagePath;
   bool isOnBack = true;
@@ -39,7 +33,7 @@ class _GameCardState extends State<GameCard> {
     imagePath = imgCover;
   }
 
-  void clearMe() {
+  void clearImage() {
     setState(() {
       done = true;
     });
@@ -51,7 +45,9 @@ class _GameCardState extends State<GameCard> {
       isOnBack = true;
     });
   }
-
+  bool isSameAs(String key){
+    return this.image['key']== key;
+  }
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -63,16 +59,15 @@ class _GameCardState extends State<GameCard> {
             }
 
             setState(() {
-              cardsOnFront.add({'name': getItemOfList(index), 'index': index});
+              cardsOnFront.add(this);
 
-              imagePath = images[getItemOfList(index)];
+              imagePath = image['path'];
               isOnBack = false;
 
-              if (cardsOnFront.length == 2 &&
-                  cardsOnFront[0]['name'] == cardsOnFront[1]['name']) {
+              if (cardsOnFront.length == 2 && cardsOnFront[0].isSameAs(this.image['key'])) {
                 new Future.delayed(Duration(milliseconds: 500), () {
                   for (var i = 0; i < cardsOnFront.length; i++) {
-                    gameCards[cardsOnFront[i]['index']].clearImage();
+                    cardsOnFront[i].clearImage();
                   }
                   cardsOnFront = [];
                   wins++;
@@ -91,7 +86,7 @@ class _GameCardState extends State<GameCard> {
               if (cardsOnFront.length == 2) {
                 new Future.delayed(Duration(milliseconds: 500), () {
                   for (var i = 0; i < cardsOnFront.length; i++) {
-                    gameCards[cardsOnFront[i]['index']].flipOnBack();
+                    cardsOnFront[i].flipOnBack();
                   }
                   cardsOnFront = [];
                   efforts++;

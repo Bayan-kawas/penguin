@@ -10,32 +10,40 @@ int movement;
 var movesCounter;
 SharedPreferences prefs;
 
-Map images = {
-  'cat': 'assets/images/cat.png',
-  'penguin': 'assets/images/penguin.jpg',
-  'duck': 'assets/images/duck.gif',
-  'tiger': 'assets/images/tiger.jpg',
-  'fish': 'assets/images/fish.png',
-  'bear': 'assets/images/bear.png',
-};
-List list = [];
+var images = [
+  {
+    "key" : "cat",
+    "path" : "assets/images/cat.png",
+  },
+  {
+    "key" : "penguin",
+    "path" : "assets/images/penguin.jpg",
+  },
+  {
+    "key" : "duck",
+    "path" : "assets/images/duck.gif",
+  },
+  {
+    "key" : "tiger",
+    "path" : "assets/images/tiger.jpg",
+  },
+  {
+    "key" : "fish",
+    "path" : "assets/images/fish.png",
+  },
+  {
+    "key" : "bear",
+    "path" : "assets/images/bear.png",
+  },
+];
 
-List getCardsForGame() {
-  list = images.keys.toList(); // get al ist of the keys of the map
-  list.addAll([]..addAll(list));
-  list.shuffle(); // shuffle the elements of the list
-  return list;
-}
-
-String getItemOfList(int i) {
-  return list[i];
-}
 
 void initGameCards() {
   gameCards = [];
   for (var i = 0; i < 12; i++) {
-    gameCards.add(GameCard(index: i));
+    gameCards.add(GameCard(image : images[i % 6], index: i));
   }
+  gameCards.shuffle();
 }
 
 void startGame() {
@@ -44,6 +52,5 @@ void startGame() {
   efforts = 0;
   movement = 0;
   movesCounter = MovesCounter();
-  getCardsForGame();
   initGameCards();
 }
