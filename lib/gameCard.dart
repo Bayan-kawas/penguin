@@ -71,8 +71,8 @@ class _GameCardState extends State<GameCard> {
                   }
                   cardsOnFront = [];
                   wins++;
+                  moves++;
                   if (wins == 6) {
-                    movement = wins + efforts;
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Result()),
@@ -89,7 +89,7 @@ class _GameCardState extends State<GameCard> {
                     cardsOnFront[i].flipOnBack();
                   }
                   cardsOnFront = [];
-                  efforts++;
+                  moves++;
                 });
                 movesCounter.increment();
               }

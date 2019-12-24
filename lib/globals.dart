@@ -5,8 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 var cardsOnFront = [];
 List gameCards;
 int wins = 0;
-int efforts = 0;
-int movement;
+int moves = 0;
 var movesCounter;
 SharedPreferences prefs;
 
@@ -48,9 +47,7 @@ void initGameCards() {
 
 void startGame() {
   cardsOnFront = [];
-  wins = 0;
-  efforts = 0;
-  movement = 0;
+  wins = moves = 0;
   movesCounter = MovesCounter();
   initGameCards();
 }

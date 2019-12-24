@@ -22,12 +22,12 @@ class _ResultState extends State<Result> {
     if (prefs.containsKey('bestScore')) {
       bestScore = prefs.getInt('bestScore');
     } else {
-      bestScore = movement;
+      bestScore = moves;
       prefs.setInt('bestScore', bestScore);
     }
 
-    if (movement < bestScore) {
-      bestScore = movement;
+    if (moves < bestScore) {
+      bestScore = moves;
       prefs.setInt('bestScore', bestScore);
     }
   }
@@ -53,7 +53,7 @@ class _ResultState extends State<Result> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 10),
                       child: Text(
-                        "you are won with $movement movement ",
+                        "you are won with $moves movement ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontStyle: FontStyle.italic,
